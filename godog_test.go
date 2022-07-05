@@ -2,6 +2,7 @@ package tests
 
 import (
 	"fmt"
+	"github.com/patriciabonaldy/answer-events-store-functional/platform/genericClient"
 	"os"
 	"testing"
 
@@ -50,8 +51,9 @@ func InitializeScenario(ctx *godog.ScenarioContext) {
 }
 
 func FeatureContext(s *godog.ScenarioContext) {
-	environmentConfiguration := config.MustGetEnvironment()
-	fmt.Fprintf(os.Stderr, "environment: %+v\n", environmentConfiguration)
+	envConfig := config.MustGetEnvironment()
+	fmt.Fprintf(os.Stderr, "environment: %+v\n", envConfig)
 
-	steps.NewSteps(s)
+	client := genericClient.New()
+	steps.NewSteps(s, client, envConfig.RouterURL)
 }

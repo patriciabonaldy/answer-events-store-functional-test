@@ -1,25 +1,21 @@
-# file: version.feature
-Feature: get version
-  In order to know godog version
+# file: online-create-answer.feature
+Feature: create an answer
+  In order to create a new answer
   As an API user
-  I need to be able to request version
+  I need to be able to create a new answer
 
-  Scenario: does not allow POST method
-    When I send "POST" request to "/version"
-    Then the response code should be 405
-    And the response should match json:
+  Scenario: error POST method
+    Given the request "empty"
+    When I send "POST" request to "/answers"
+    Then the response code should be 400
+    And the response should match:
       """
-      {
-        "error": "Method not allowed"
-      }
+      Key: 'CreateRequest.Data' Error:Field validation for 'Data' failed on the 'required' tag
       """
 
-  Scenario: should get version number
-    When I send "GET" request to "/version"
+  Scenario: success POST method
+    Given the request "default"
+    When I send "POST" request to "/answers"
+    Then the response code should be 201
+    Then I find the answer
     Then the response code should be 200
-    And the response should match json:
-      """
-      {
-        "version": "v0.0.0-dev"
-      }
-      """

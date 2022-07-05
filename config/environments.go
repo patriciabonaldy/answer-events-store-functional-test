@@ -15,11 +15,11 @@ type Environments map[string]Environment
 
 var (
 	environments = map[string]Environment{
-		"": { // Send tests from local machine to staging
-			RouterURL: "https://domain_url/v1",
+		"": { // Run tests in local machine
+			RouterURL: "http://localhost:8080",
 		},
-		"local": { // Send tests from local machine to local machine services
-			RouterURL: "http://localhost:8082",
+		"staging": { // Run tests in staging
+			RouterURL: "https://domain_url/v1",
 		},
 	}
 )
